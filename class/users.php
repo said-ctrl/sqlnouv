@@ -1,5 +1,6 @@
 <?php
 
+
 class Users
 {
     private $pseudo;

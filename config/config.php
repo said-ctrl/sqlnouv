@@ -1,7 +1,7 @@
 <?php
 
-include('users.php');
-
+include('class/users.php');
+include('class/livre.php');
 class bdd
 {
 
@@ -50,7 +50,7 @@ class bdd
         $users = $this->getAll();
 
         foreach ($users as $user) {
-            if ($param["user"] == $user['email'] && password_verify($param["pass"], $user["mdp"])) {
+            if ($param["email"] == $user['email'] && password_verify($param["pass"], $user["mdp"])) {
                 return $user;
             }
         }
@@ -61,6 +61,32 @@ class bdd
         $sql = $this->bdd->prepare("UPDATE post SET contenu = : contenu WHERE id = :id");
         $sql->bindParam(":contenu", $param["contenu"]);
         $sql->bindParam(":id", $param["id"]);
+        $sql->execute();
+    }
+    public function addbooks(livres $user)
+    {
+
+        $titre = $user->getTitre();
+        $contenu = $user->getContenu();
+        $auteur = $user->getAuteur();
+
+        $sql = $this->bdd->prepare("INSERT INTO book (titre, contenu, auteur) VALUES (:titre, :contenu, :auteur)");
+        $sql->bindParam(":titre", $titre);
+        $sql->bindParam(":contenu", $contenu);
+        $sql->bindParam(":auteur", $auteur);
+        $sql->execute();
+    }
+
+    public function getBooks(): array
+    {
+        $sql = $this->bdd->prepare("SELECT * from book");
+        $sql->execute();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deletbook(int $id){
+        $sql = $this->bdd->prepare("DELETE from book WHERE id=:id");
+        $sql->bindParam(":id", $id);
         $sql->execute();
     }
 }

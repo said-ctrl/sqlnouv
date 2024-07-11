@@ -10,6 +10,8 @@ class livres
 
     private $auteur;
 
+    private $id;
+
     public function setTitre($titre){
         $this->titre = $titre;
     }
@@ -36,20 +38,11 @@ class livres
     {
         return $this->auteur;
     }
-    
-
-    public function addUser(livres $user)
-    {
-
-        $titre = $user->getTitre();
-        $contenu = $user->getContenu();
-        $auteur = $user->getAuteur();
-
-        $sql = $this->book->prepare("INSERT INTO book (titre, contenu, auteur) VALUES (:titre, :contenu, :auteur)");
-        $sql->bindParam(":titre", $titre);
-        $sql->bindParam(":contenu", $contenu);
-        $sql->bindParam(":auteur", $auteur);
-        $sql->execute();
+    public function setId($id){
+        $this->id = $id;
     }
+    public function getId()
+    { return $this->id;
 
+   }
 }
