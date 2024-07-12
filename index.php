@@ -6,7 +6,7 @@ session_start();
 $bdd = new bdd();
 $bdd->connect();
 
-
+/* FONCTION AJOUT CONTENU*/
 if (isset($_POST['transmettre'])) {
 
     $titre = htmlspecialchars(stripslashes(trim($_POST['titre'])));
@@ -21,7 +21,7 @@ if (isset($_POST['transmettre'])) {
 }
 
 $books = $bdd->getBooks();
-
+/*FONCTION MODIFIE CONTENU*/
 if (isset($_POST['modif'])) {
 
     $bdd->modifie(["titre"=>$_POST["titre"],"contenu"=>$_POST["contenu"],"auteur"=>$_POST["auteur"], "id"=>$_POST['modif']]);
@@ -62,6 +62,7 @@ if (isset($_POST['modif'])) {
             <th>Action</th>
         </thead>
         <tbody>
+            <!--BOUCLE RECHERCHE ET AJOUT NEW-->
             <?php foreach ($books as $newlivre) { ?>
                 <tr>
                     <td><?php echo $newlivre['titre']; ?> </td>
@@ -82,6 +83,7 @@ if (isset($_POST['modif'])) {
                         </form>
                     </td>
                 </tr>
+                <!--FONCTION SUPPRIME-->
                 <?php if (isset($_POST['supprime'])) {
                     if ($_POST['supprime'] == $newlivre['id']) {
                         $bdd->deletbook($newlivre['id']);

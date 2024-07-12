@@ -32,7 +32,7 @@ class bdd
 
         return $done->fetchAll(PDO::FETCH_ASSOC);
     }
-
+/*FONCTION INSCRIPTION*/
     public function addUser(Users $user): void
     {
 
@@ -44,7 +44,7 @@ class bdd
         $sql->bindParam(":pass", $password);
         $sql->execute();
     }
-
+/*FONCTION CONNEXION UTILISTEUR*/
     public function userConnect($param = [])
     {
         $users = $this->getAll();
@@ -55,7 +55,7 @@ class bdd
             }
         }
     }
-
+/* FONCTION MODIFIE LIVRE*/
     public function modifie($param = []): void
     {
         $sql = $this->bdd->prepare("UPDATE book SET titre = :titre, contenu = :contenu, auteur = :auteur WHERE id = :id");
@@ -66,6 +66,7 @@ class bdd
         $sql->execute();
         
     }
+    /*FONCTION AJOUT LIVRE*/
     public function addbooks(livres $user)
     {
 
@@ -86,7 +87,7 @@ class bdd
         $sql->execute();
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
-
+/*FONCTION SUPP*/
     public function deletbook(int $id){
         $sql = $this->bdd->prepare("DELETE from book WHERE id=:id");
         $sql->bindParam(":id", $id);
