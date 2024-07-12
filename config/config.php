@@ -58,10 +58,13 @@ class bdd
 
     public function modifie($param = []): void
     {
-        $sql = $this->bdd->prepare("UPDATE post SET contenu = : contenu WHERE id = :id");
+        $sql = $this->bdd->prepare("UPDATE book SET titre = :titre, contenu = :contenu, auteur = :auteur WHERE id = :id");
+        $sql->bindParam(":titre", $param["titre"]);
         $sql->bindParam(":contenu", $param["contenu"]);
+        $sql->bindParam(":auteur", $param["auteur"]);
         $sql->bindParam(":id", $param["id"]);
         $sql->execute();
+        
     }
     public function addbooks(livres $user)
     {

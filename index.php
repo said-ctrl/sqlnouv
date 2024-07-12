@@ -22,7 +22,10 @@ if (isset($_POST['transmettre'])) {
 
 $books = $bdd->getBooks();
 
+if (isset($_POST['modif'])) {
 
+    $bdd->modifie(["titre"=>$_POST["titre"],"contenu"=>$_POST["contenu"],"auteur"=>$_POST["auteur"], "id"=>$_POST['modif']]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,16 +68,25 @@ $books = $bdd->getBooks();
                     <td><?php echo $newlivre['contenu']; ?> </td>
                     <td><?php echo $newlivre['auteur']; ?> </td>
                     <td>
-                        <form action="" method="post">
+                        <form action="" method="post" style="display: flex; flex-direction: column; width: 50%; margin:auto;">
                             <button type="submit" name="supprime" value="<?php echo $newlivre['id']; ?>"> delete</button>
+                        </form>
+
+                    </td>
+                    <td>
+                        <form action="" method="post" style="display: flex; flex-direction: column; width: 50%; margin:auto;">
+                            <input type="text" name="titre" placeholder="titre" value="<?= $newlivre["titre"]; ?>">
+                            <textarea name="contenu" placeholder="contenu"><?= $newlivre["contenu"]; ?></textarea>
+                            <input type="text" name="auteur" placeholder="auteur" value="<?= $newlivre["auteur"]; ?>">
+                            <button type="submit" name="modif" value="<?php print $newlivre['id']; ?>">modifie</button>
                         </form>
                     </td>
                 </tr>
-              <?php  if (isset($_POST['supprime'])) {
-                if($_POST['supprime'] ==$newlivre['id']){
-                $bdd->deletbook($newlivre['id']);
+                <?php if (isset($_POST['supprime'])) {
+                    if ($_POST['supprime'] == $newlivre['id']) {
+                        $bdd->deletbook($newlivre['id']);
+                    }
                 }
-                } 
                 ?>
 
             <?php } ?>
@@ -87,6 +99,9 @@ $books = $bdd->getBooks();
     <div>
         <h1>Bienvenue sur votre tableau de bord</h1>
         <p>Vous pouvez maintenant accéder à toutes les fonctionnalités réservées à nos utilisateurs inscrits.</p>
+
+
+
         <a href="logout.php">Se déconnecter</a>
     </div>
 
